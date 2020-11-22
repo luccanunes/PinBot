@@ -82,6 +82,7 @@ client.on("message", async (msg) => {
             questions = docs;
         });
         await sleep(500);
+        questions.sort((a, b) => Number(a.number) - Number(b.number));
         for (let q of questions) {
             const emb = new Discord.MessageEmbed().setColor("#e50790").setTitle(`Questão ${q.number}`).setThumbnail(q.image).setDescription(`**Resposta:** ${q.answer}`);
             await msg.channel.send(emb);
