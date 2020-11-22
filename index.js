@@ -74,6 +74,18 @@ client.on("message", async (msg) => {
         }
         const emb = new Discord.MessageEmbed().setColor("#e50790").setTitle(`Questão ${number}`).setThumbnail(doc.image).setDescription(`**Resposta:** ${doc.answer}`);
         await msg.channel.send(emb);
+        return;
+    }
+    if (msg.content.toLowerCase() === "-list") {
+        let questions = [];
+        db.find({}, (err, docs) => {
+            questions = docs;
+        });
+        await sleep(500);
+        for (let q of questions) {
+            const emb = new Discord.MessageEmbed().setColor("#e50790").setTitle(`Questão ${q.number}`).setThumbnail(q.image).setDescription(`**Resposta:** ${q.answer}`);
+            await msg.channel.send(emb);
+        }
     }
 });
 
